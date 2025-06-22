@@ -41,9 +41,9 @@
 *.dwo
 
 # Folders
-Debug/
-Release/
-x64/
-ipch/
-.vscode/
-.vs/
+**/Debug/
+**/Release/
+**/x64/
+**/ipch/
+**/.vscode/
+**/.vs/
