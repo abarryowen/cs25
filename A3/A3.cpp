@@ -18,45 +18,46 @@ int main()
     // Select item from menu
     switch (choice) {
     case 1:
-        cout << "Okay, we can go ahead and add items";
+        cout << "Okay, we can go ahead and add items\n";
         break;
 
     case 2:
-        cout << "Lets check the quantity of items";
+        cout << "Lets check the quantity of items\n";
         break;
 
     case 3:
-        cout << "Lets grab the items";
+        cout << "Lets grab the items\n";
         break;
 
     default:
-        cout << "Please select a valid option (1,2 or 3)";
+        cout << "Please select a valid option (1,2 or 3)\n";
         break;
         
     }
 
 // Part 2 - Largest Number
-    // Welcome message
-    cout << "\n\nThis program determines the largest of three numbers" << endl;
-    
-    // Get user data
-    cout << "Enter your three numbers: ";
-    float a, b, c;
-    cin >> a >> b >> c;
+    float n1, n2, n3;
 
-    // Find largest
-    if (a > b && a > c) {
-        cout << a << " is the largest";
+    cout << "Enter three numbers: ";
+    cin >> n1 >> n2 >> n3;
+
+    if (n1 == n2 && n1 >= n3) 
+    {
+        cout << "Largest number: " << n1;
     }
-    else if (b > a && b > c) {
-        cout << b << " is the largest";
+        
+
+    if (n2 == n1 && n2 >= n3)
+    {
+        cout << "Largest number: " << n2;
     }
-    else if (c > a && c > b) {
-        cout << c << " is the largest";
+
+    if (n3 >= n1 && n3 >= n2)
+    {
+        cout << "Largest number: " << n3;
     }
-    else {
-        // Otherwise there is no single largest
-        cout << "There is no single largest number";
-    }
+
+    return 0;
+
 }
 
