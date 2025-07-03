@@ -1,6 +1,6 @@
 # Final Project SOW
 
-## Delivarables:
+## Delivarables
 I will be making a todo list application. It will be structured sort of like a folder system. You have categories and sub-categories (like folders) which you can put tasks and sub-tasks into.  For example, you might have your categories be UI and Backend for some tech project. Then you would put tasks in here like “Connect to database” under Backend. For each task, you can then open it up and add notes and subtasks. 
 
 I’m modeling this based off a very basic project management system I use in google sheets and google docs, so I’m hoping to simulate that here. In google sheets I have grouped rows under each category, and then the tasks link to a google docs file where you can write notes and put subtasks. The columns in the spreadsheet are Categories, Tasks, Action Date, Due Date, Tag and Rank. This is what I would hope to simulate using c++.
