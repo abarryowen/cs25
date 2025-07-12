@@ -66,6 +66,11 @@ int ConcertMgr::getTotalSold() const {
 }
 
 void ConcertMgr::printGuests() const {
+	// Check if there are any guests
+	if (soldTickets.size() == 0) {
+		cout << "No guests yet\n" << endl;
+		return;
+	}
 
 	// Print guest list
 	cout << "Guests List:\n";
@@ -93,6 +98,12 @@ void ConcertMgr::printBoxOffice() const {
 }
 
 void ConcertMgr::searchGuests(int guestId) const {
+	// Check if there are any guests
+	if (soldTickets.size() == 0) {
+		cout << "No guests yet\n" << endl;
+		return;
+	}
+
 	// Initialize min, max and middle indices
 	size_t min_index = 0;
 	size_t max_index = soldTickets.size() - 1;
