@@ -178,12 +178,12 @@ void ConcertMgr::sellTickets(string ticketType, string name, int quantity) {
 	if (ticketType == "VIP") {
 		// VIP
 		soldTickets.push_back(new VipTicket(Ticket::incNextId(), name, vipPrice, quantity));
-		addRevenue(vipPrice);
+		addRevenue(vipPrice*quantity);
 	}
 	else {
 		// Standard ticket
 		soldTickets.push_back(new StandardTicket(Ticket::incNextId(), name, stdPrice, quantity));
-		addRevenue(stdPrice);
+		addRevenue(stdPrice*quantity);
 	}
 
 }

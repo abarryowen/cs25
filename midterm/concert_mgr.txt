@@ -1,7 +1,8 @@
 Concert Info
-Music Festival,30,10,20,36,4
+Music Festival,170,10,20,40,5
 
 Sold Tickets
-1,Standard,Jerry Seinfeld,10.00,5
-2,Standard,George Costanza,10.00,3
-3,Standard,Elaine Benes,10.00,6
+1,VIP,Jerry Seinfeld,20.00,4
+2,Standard,Benes Elaine,10.00,2
+3,Standard,George Costanza,10.00,1
+4,VIP,Kramer,20.00,3
