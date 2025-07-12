@@ -40,7 +40,7 @@ int main() {
 		if (option == 1) {
 			// If user selects to load current then open file
 
-			ifstream testOpen("concert_files/concert_mgr.txt");
+			ifstream testOpen("concert_mgr.txt");
 
 			if (!testOpen) {
 				cout << "There is no current concert, please select again\n\n";
@@ -124,15 +124,16 @@ int main() {
 			cout << "Quantity: ";
 			cin >> t_quantity;
 
-			if (t_quantity == 1) {
-				t_str = "Standard";
+			if (t_quantity == 2) {
+				t_str = "VIP";
 			}
 			else {
-				t_str = "VIP";
+				t_str = "Standard";
 			}
 
 			cout << "\n";
 			cm->sellTickets(t_str, g_name, t_quantity);
+			cout << "Ticket sold!\n";
 			cout << "\n";
 
 		}

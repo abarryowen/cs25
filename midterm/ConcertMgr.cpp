@@ -132,7 +132,7 @@ void ConcertMgr::searchGuests(int guestId) const {
 void ConcertMgr::saveToFile() const {
 
 	// Get file
-	ofstream outFile("concert_files/concert_mgr.txt");
+	ofstream outFile("concert_mgr.txt");
 
 	// Save concert info
 	outFile << "Concert Info\n";
@@ -190,7 +190,7 @@ void ConcertMgr::sellTickets(string ticketType, string name, int quantity) {
 
 void ConcertMgr::loadFromFile() {
 
-	ifstream inFile("concert_files/concert_mgr.txt"); // Get file to load from
+	ifstream inFile("concert_mgr.txt"); // Get file to load from
 
 	string line;
 	stringstream values;
