@@ -124,7 +124,7 @@ int main() {
 			cout << "Quantity: ";
 			cin >> t_quantity;
 
-			if (t_quantity == 2) {
+			if (t_type == 2) {
 				t_str = "VIP";
 			}
 			else {
