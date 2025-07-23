@@ -1,11 +1,13 @@
 #include <string>
 #include <stdexcept>
 
-#include "TicketMgr.h"
 #include "Types.h"
+#include "Utils.h"
+#include "TicketMgr.h"
 #include "Event.h"
 #include "Guest.h"
 #include "Ticket.h"
+#include "Venue.h"
 
 using namespace std;
 
@@ -26,6 +28,11 @@ TicketMgr::~TicketMgr() {
 		delete e; 
 		e = nullptr;
 	}
+
+	for (Venue*& v : venues) {
+		delete v;
+		v = nullptr;
+	}
 }
 
 // Accessors
@@ -37,152 +44,37 @@ size_t TicketMgr::numEvents() const {
 	return events.size();
 }
 
-GuestList TicketMgr::sortGuests() const {
-
-	GuestList guests_copy = guests;
-	bool swap;
-	Guest* temp = nullptr;
-
-	// Only sort if there are guests
-	if (numGuests() == 0) {
-		return guests_copy;
-	}
-
-	do {
-		swap = false; // Set to false
-
-		// Loop through guests and check for elements out of place
-		for (size_t i = 0; i < (numGuests() - 1); i++) {
-			if (guests_copy[i]->getUsername() > guests_copy[i + 1]->getUsername()) {
-				swap = true; // Set flag to true
-
-				// Swap elements
-				temp = guests_copy[i];
-				guests_copy[i] = guests_copy[i + 1];
-				guests_copy[i + 1] = temp;
-			}
-		}
-	} while (swap);
-
-	return guests_copy;
-}
-
 Guest* TicketMgr::searchGuests(string username) const {
 
-	// Check if there are any guests
-	if (numGuests() == 0) {
-		return nullptr;
-	}
+	Guest* g_ptr = utils::searchPtrs(
+		guests,
+		[](const Guest* g) { return g->getUsername(); },
+		username
+	);
 
-	auto g = sortGuests(); // Get copy of guests sorted by username
-
-	// Initialize min, max and middle indices
-	int min_index = 0;
-	int max_index = static_cast<int>(numGuests()) - 1;
-	int mid_index = max_index / 2;
-
-	bool found = false; // Initialize the found flag to false
-
-	while (!found && min_index <= max_index) {
-		// Continue searching while the item has not been found, and is still in bounds
-
-		if (g[mid_index]->getUsername() == username) {
-			// If the middle item is the one being searched for then return it
-			found = true;
-		}
-		else if (g[mid_index]->getUsername() > username) {
-			// If larger then resize down
-			max_index = mid_index - 1;
-			mid_index = (max_index + min_index) / 2;
-		}
-		else {
-			// Otherwise resize up
-			min_index = mid_index + 1;
-			mid_index = (max_index + min_index) / 2;
-		}
-	}
-
-	// Let user know if guest is in attendance
-	if (!found) {
-		return nullptr;
-	}
-	else {
-		return g[mid_index];
-	}
-}
-
-EventList TicketMgr::sortEvents() const {
-
-	EventList events_copy = events;
-	bool swap;
-	Event* temp = nullptr;
-
-	// Only sort if there are guests
-	if (numEvents() == 0) {
-		return events_copy;
-	}
-
-	do {
-		swap = false; // Set to false
-
-		// Loop through guests and check for elements out of place
-		for (size_t i = 0; i < (numEvents() - 1); i++) {
-			if (events_copy[i]->getTitle() > events_copy[i + 1]->getTitle()) {
-				swap = true; // Set flag to true
-
-				// Swap elements
-				temp = events_copy[i];
-				events_copy[i] = events_copy[i + 1];
-				events_copy[i + 1] = temp;
-			}
-		}
-	} while (swap);
-
-	return events_copy;
+	return g_ptr;
 }
 
 Event* TicketMgr::searchEvents(string title) const {
 
-	// Check if there are any guests
-	if (numEvents() == 0) {
-		return nullptr;
-	}
+	Event* e_ptr = utils::searchPtrs(
+		events,
+		[](const Event* e) { return e->getTitle(); }, 
+		title
+	);
 
-	auto e = sortEvents(); // Get copy of guests sorted by username
+	return e_ptr;
+}
 
-	// Initialize min, max and middle indices
-	int min_index = 0;
-	int max_index = static_cast<int>(numEvents()) - 1;
-	int mid_index = max_index / 2;
+Venue* TicketMgr::searchVenues(string name) const {
 
-	bool found = false; // Initialize the found flag to false
+	Venue* v_ptr = utils::searchPtrs(
+		venues,
+		[](const Venue* v) { return v->getName(); },
+		name
+	);
 
-	while (!found && min_index <= max_index) {
-		// Continue searching while the item has not been found, and is still in bounds
-
-		if (e[mid_index]->getTitle() == title) {
-			// If the middle item is the one being searched for then return it
-			found = true;
-		}
-		else if (e[mid_index]->getTitle() > title) {
-			// If larger then resize down
-			max_index = mid_index - 1;
-			mid_index = (max_index + min_index) / 2;
-		}
-		else {
-			// Otherwise resize up
-			min_index = mid_index + 1;
-			mid_index = (max_index + min_index) / 2;
-		}
-	}
-
-	// Let user know if guest is in attendance
-	if (!found) {
-		return nullptr;
-	}
-	else {
-		return e[mid_index];
-	}
+	return v_ptr;
 }
 
 void TicketMgr::printGuests() const {
@@ -207,6 +99,17 @@ void TicketMgr::printEvents() const {
 	}
 }
 
+void TicketMgr::printVenues() const {
+
+	cout << "\n-----Venues-----\n\n";
+
+	// Print title and ticket info
+	for (Venue* v : venues) {
+		v->printVenue();
+		cout << endl;
+	}
+}
+
 // Mutators
 void TicketMgr::addGuest(string username, string firstName, string lastName) {
 
@@ -217,27 +120,42 @@ void TicketMgr::addGuest(string username, string firstName, string lastName) {
 		// Only add guest if they don't exist already
 		g = new Guest(username, firstName, lastName);
 		guests.push_back(g);
-		g = nullptr;
 	}
 	else {
 		cout << "An guest with this username already exists\n";
 	}
 }
 
-void TicketMgr::addEvent(string _title, int totalTickets, int totalSeats, double stdPrice, double vipPrice) {
+void TicketMgr::addEvent(string title, Venue* venue, int totalTickets, int totalSeats, double stdPrice, double vipPrice) {
 	// Search for event in the registry
-	Event* e = searchEvents(_title);
+	Event* e = searchEvents(title);
 
 	if (e == nullptr) {
 		// Only add event if it doesn't exist already
-		e = new Event(_title, totalTickets, totalSeats, stdPrice, vipPrice);
+		e = new Event(title, venue, totalTickets, totalSeats, stdPrice, vipPrice);
 		events.push_back(e);
-		e = nullptr;
+
+		venue->addEvent(e); // Add to venue
 	}
 	else {
 		cout << "An event with this title already exists\n";
 	}
 
+}
+
+void TicketMgr::addVenue(string _name) {
+
+	//Search for guest in the registry
+	Venue* v = searchVenues(_name);
+
+	if (v == nullptr) {
+		// Only add guest if they don't exist already
+		v = new Venue(_name);
+		venues.push_back(v);
+	}
+	else {
+		cout << "An venue with this name already exists\n";
+	}
 }
 
 void TicketMgr::sellTickets(Guest* g, Event* e, TicketType type, int quantity) {

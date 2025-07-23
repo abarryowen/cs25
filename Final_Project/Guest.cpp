@@ -20,18 +20,6 @@ Guest::Guest(string _username, string firstName, string lastName)
 	  name(firstName + " " + lastName) {}
 
 // Accessors
-int Guest::getId() const {
-	return id;
-}
-
-string Guest::getUsername() const {
-	return username;
-}
-
-string Guest::getName() const {
-	return name;
-}
-
 void Guest::printGuest() const {
 	cout << "Name: " << getName() << endl
 		<< "Username: " << getUsername() << endl;

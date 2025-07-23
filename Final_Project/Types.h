@@ -9,6 +9,7 @@ using namespace std;
 class Ticket;
 class Guest;
 class Event;
+class Venue;
 
 // Enums and structs
 
@@ -40,5 +41,6 @@ struct TicketGroup {
 using TicketList = vector<Ticket*>;
 using GuestList = vector<Guest*>;
 using EventList = vector<Event*>;
+using VenueList = vector<Venue*>;
 using TicketHash = unordered_map<TicketType, TicketInfo>;
 using TicketPivot = unordered_map<int, TicketGroup>;

@@ -6,6 +6,7 @@
 #include "TicketMgr.h"
 #include "Guest.h"
 #include "Event.h"
+#include "Venue.h"
 
 using namespace std;
 
@@ -17,14 +18,19 @@ int main() {
 	tm.addGuest("jseinfeld11", "Jerry", "Seinfeld");
 	tm.addGuest("elaine78", "Elaine", "Benes");
 
-	tm.addEvent("Music Festival", 200, 20, 10, 20);
-	tm.addEvent("Concert", 10, 5, 10, 20);
-	tm.addEvent("Cooking Class", 20, 0, 10, 0);
+	tm.addVenue("Planterie");
+	tm.addVenue("Oracle Park");
 
-	// See event listing
-	//tm.printEvents();
-	//tm.printGuests();
+	Venue* v = tm.searchVenues("Planterie");
+	Venue* u = tm.searchVenues("Oracle Park");
+
+	tm.addEvent("Music Festival", u, 200, 20, 10, 20);
+	tm.addEvent("Sculpy Event", v, 10, 5, 10, 20);
+	tm.addEvent("Cooking Class", v, 20, 0, 10, 0);
 	
+	// Test abstract functions
+
+	// Test purchasing tickets
 	Guest* g = tm.searchGuests("jseinfeld11");
 	Guest* f = tm.searchGuests("elaine78");
 
@@ -39,9 +45,12 @@ int main() {
 	
 	g->printEvents();
 	f->printEvents();
-	e->printGuests();
 
-	cout << endl;
-	e->printEvent();
+	v->printEvents();
+	//e->printGuests();
+
+	//cout << endl;
+	//e->printEvent();
+
 	return 0;
 }

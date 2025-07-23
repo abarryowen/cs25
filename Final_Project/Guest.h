@@ -22,13 +22,13 @@ public:
 // Accessors
 
 	/// <summary>Get guest id</summary>
-	int getId() const;
+	int getId() const { return id; };
 
 	/// <summary>Get guest username</summary>
-	string getUsername() const;
+	string getUsername() const { return username; };
 
 	/// <summary>Get guest name</summary>
-	string getName() const;
+	string getName() const { return name; };
 
 	/// <summary>Print guest info</summary>
 	void printGuest() const;

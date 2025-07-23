@@ -5,6 +5,7 @@
 #include "Ticket.h"
 #include "Event.h"
 #include "Guest.h"
+#include "Venue.h"
 
 using namespace std;
 
@@ -14,9 +15,10 @@ using namespace std;
 int Event::nextId = 1;
 
 // Constructors and destructors
-Event::Event(string _title, int totalTickets, int _totalSeats, double stdPrice, double vipPrice)
+Event::Event(string _title, Venue* _venue, int totalTickets, int _totalSeats, double stdPrice, double vipPrice)
 	: id(nextId++),
 	  title(_title),
+	  venue(_venue),
 	  totalSeats(_totalSeats), 
       reservedSeats(0),
 	  unsoldTickets(totalTickets), 
@@ -35,32 +37,10 @@ Event::~Event() {
 }
 
 // Accessors
-int Event::getId() const {
-	return id;
-}
-
-string Event::getTitle() const {
-	return title;
-}
-
-int Event::getUnsoldTickets() const {
-	return unsoldTickets;
-}
-
-int Event::getNextSeat() const {
-	return reservedSeats + 1;
-}
-
-int Event::getOpenSeats() const {
-	return totalSeats - reservedSeats;
-}
-
 void Event::printEvent() const {
-	cout << "Title: " << getTitle() << endl
-		<< "ID: " << getId() << endl
-		<< "Tickets Remaining: " << getUnsoldTickets() << endl
-		<< "Seats Remaining: " << getOpenSeats() << endl
-		<< "Revenue: " << revenue << endl << endl;
+	cout << getTitle() << " at " << getVenue()->getName() << endl
+		<< "Tickets Left: " << getUnsoldTickets() << ", Seats Left: " << getOpenSeats() << endl
+		<< "Revenue Test: " << revenue << endl << endl;
 }
 
 void Event::printGuests() const {
@@ -103,7 +83,7 @@ bool Event::saleValid(TicketType type, int quantity) const {
 // Mutators
 void Event::addTicket(Ticket* t) {
 	
-	addRevenue(t->getPrice()); // Add revenue
+	revenue += (t->getPrice()); // Add revenue
 	soldTickets.push_back(t); // Add ticket to registry
 	unsoldTickets--; // Decrement unsoldtickets
 
@@ -111,17 +91,6 @@ void Event::addTicket(Ticket* t) {
 	// Increment reserved seats if vip ticket
 	if (t->getType() == TicketType::VIP) {
 		reservedSeats++;
-	}
-}
-
-void Event::addRevenue(double amount) {
-
-	// Add revenue if amount is positive
-	if (amount >= 0) {
-		revenue += amount;
-	}
-	else {
-		throw std::invalid_argument("Revenue amount cannot be negative");
 	}
 }
 
