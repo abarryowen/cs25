@@ -15,13 +15,16 @@ using namespace std;
 int Event::nextId = 1;
 
 // Constructors and destructors
-Event::Event(string _title, Venue* _venue, int totalTickets, int _totalSeats, double stdPrice, double vipPrice)
+Event::Event(
+	string _title, Venue* _venue, int _totalTickets, 
+	int _totalSeats, double stdPrice, double vipPrice
+)
 	: id(nextId++),
 	  title(_title),
 	  venue(_venue),
 	  totalSeats(_totalSeats), 
       reservedSeats(0),
-	  unsoldTickets(totalTickets), 
+	  unsoldTickets(_totalTickets), 
 	  revenue(0),
 	  ticketDetails{
 		  {TicketType::Standard, TicketInfo(stdPrice)},
@@ -29,12 +32,19 @@ Event::Event(string _title, Venue* _venue, int totalTickets, int _totalSeats, do
 	  }
     {}
 
-Event::~Event() {
-	for (Ticket*& t : soldTickets) {
-		delete t;
-		t = nullptr;
-	}
-}
+Event::Event(
+	int _id, string _title, double _revenue, int _unsoldTickets,
+	int _totalSeats, int _reservedSeats, TicketHash details
+)
+	: id(_id),
+	  title(_title),
+	  venue(nullptr),
+	  totalSeats(_totalSeats),
+	  reservedSeats(_reservedSeats),
+	  unsoldTickets(_unsoldTickets),
+	  revenue(_revenue),
+	  ticketDetails(details)
+	  {}
 
 // Accessors
 void Event::printEvent() const {
@@ -57,8 +67,8 @@ void Event::printGuests() const {
 	Ticket::printTicketPivot(t_piv);
 }
 
-const TicketInfo& Event::getTicketInfo(TicketType type) const {
-	return ticketDetails.at(type);
+const TicketHash& Event::getTicketDetails() const {
+	return ticketDetails;
 }
 
 bool Event::saleValid(TicketType type, int quantity) const {
@@ -94,7 +104,31 @@ void Event::addTicket(Ticket* t) {
 	}
 }
 
+void Event::loadTicket(Ticket* t) {
+	// Only load venue if null
+	if (venue == nullptr) {
+		soldTickets.push_back(t);
+	}
+	else {
+		cout << "Tickets already loaded" << endl;
+	}
+}
+
+void Event::loadVenue(Venue* v) {
+	// Only load venue if null
+	if (venue == nullptr) {
+		venue = v;
+	}
+	else {
+		cout << "Venue already loaded" << endl;
+	}
+}
+
 // Static methods
 void Event::setNextId(int id) {
 	nextId = id;
+}
+
+int Event::getNextId() {
+	return nextId;
 }

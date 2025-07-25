@@ -37,10 +37,33 @@ struct TicketGroup {
 	TicketGroup() : owner("") {}
 };
 
+namespace load {
+	/// <summary>Struct for loading guests</summary>
+	struct GuestLoad {
+		Guest* guest;
+		vector<int> ticketIds;
+
+		GuestLoad(Guest* g, vector<int> ids)
+			: guest(g), ticketIds(ids) {}
+	};
+
+	/// <summary>Struct for loading events</summary>
+	struct EventLoad {
+		Event* event;
+		int venue;
+		vector<int> ticketIds;
+
+		EventLoad(Event* e, int _venue, vector<int> ids)
+			: event(e), venue(_venue), ticketIds(ids) {
+		}
+	};
+}
+
 // Aliases
 using TicketList = vector<Ticket*>;
 using GuestList = vector<Guest*>;
 using EventList = vector<Event*>;
 using VenueList = vector<Venue*>;
+using IntList = vector<int>;
 using TicketHash = unordered_map<TicketType, TicketInfo>;
 using TicketPivot = unordered_map<int, TicketGroup>;

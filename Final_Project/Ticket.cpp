@@ -19,10 +19,6 @@ using namespace std;
 int Ticket::nextId = 1;
 
 // Constructors and destructors
-Ticket::Ticket(Guest* g, Event* e, double price)
-	: id(nextId++), guest(g), event(e), sellPrice(price) {}
-
-Ticket::~Ticket() = default;
 
 // Accessors
 
@@ -47,6 +43,10 @@ void Ticket::setNextId(int _id) {
 	nextId = _id;
 }
 
+int Ticket::getNextId() {
+	return nextId;
+}
+
 string Ticket::typeToString(TicketType t) {
 
 	switch (t) {
@@ -56,6 +56,26 @@ string Ticket::typeToString(TicketType t) {
 			return "VIP";
 		default:
 			throw std::invalid_argument("Invalid TicketType");
+	}
+}
+
+void Ticket::loadGuest(Guest* g) {
+	// Only load guest if null
+	if (guest == nullptr) {
+		guest = g;
+	}
+	else {
+		cout << "Guest already loaded" << endl;
+	}
+}
+
+void Ticket::loadEvent(Event* e) {
+	// Only load event if null
+	if (event == nullptr) {
+		event = e;
+	}
+	else {
+		cout << "Event already loaded" << endl;
 	}
 }
 
@@ -133,12 +153,5 @@ void Ticket::printTicketPivot(const TicketPivot& t_piv) {
 	}
 }
 
-// Standard Ticket
-StandardTicket::StandardTicket(Guest* g, Event* e, double price)
-	: Ticket(g, e, price) {}
-
-// VIP Ticket
-VipTicket::VipTicket(Guest* g, Event* e, double price, int seat)
-	: Ticket(g, e, price), seatNum(seat) {}
 
 

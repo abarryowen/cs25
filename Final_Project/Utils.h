@@ -14,7 +14,7 @@ namespace utils{
 	///<summary>Generic sort function</summary>
 	/// <param name="ptrs">Vector of pointers</param>
 	/// <param name="keyFunc">
-	/// Function that takes a pointer and returns a string.
+	/// Function that takes a pointer and returns an attribute.
 	/// Enter a class method as an argument.
 	/// </param>
 	/// <returns>Sorted vector of pointers</returns>
@@ -52,12 +52,13 @@ namespace utils{
 	///<summary>Generic binary sort function</summary>
 	/// <param name="ptrs">Vector of pointers sorted by the key being searched on</param>
 	/// <param name="keyFunc">
-	/// Function that takes a pointer and returns a string.
+	/// Function that takes a pointer and returns an attribute of type R.
 	/// Enter a class method as an argument.
 	/// </param>
+	/// <param name="key">Key being searched for</param>
 	/// <returns>Pointer being searched for, if found. Otherwise nullptr</returns>
-	template <typename T, typename CallFunc>
-	T* searchPtrs(const vector<T*>& ptrs, CallFunc keyFunc, string key) {
+	template <typename T, typename R, typename CallFunc>
+	T* searchPtrs(const vector<T*>& ptrs, CallFunc keyFunc, R key) {
 
 		// Check if there are any guests
 		if (ptrs.size() == 0) {

@@ -14,10 +14,7 @@ using namespace std;
 int Guest::nextId = 1;
 
 // Constructors
-Guest::Guest(string _username, string firstName, string lastName)
-	: id(nextId++),
-	  username(_username),
-	  name(firstName + " " + lastName) {}
+
 
 // Accessors
 void Guest::printGuest() const {
@@ -85,4 +82,8 @@ void Guest::addTicket(Ticket* t) {
 // Static methods
 void Guest::setNextId(int id) {
 	nextId = id;
+}
+
+int Guest::getNextId() {
+	return nextId;
 }

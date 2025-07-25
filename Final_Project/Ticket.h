@@ -26,12 +26,18 @@ public:
 // Constructors and destructors
 
 	/// <summary>Create new ticket</summary>
-	Ticket(Guest* g, Event* e, double price);
+	Ticket(Guest* g, Event* e, double price)
+		: id(nextId++), guest(g), event(e), sellPrice(price) {}
+
+	/// <summary>Load ticket from file</summary>
+	Ticket(int _id, double price)
+		: id(_id), guest(nullptr), event(nullptr), sellPrice(price) {}
 
 	/// <summary>Virtual destructor</summary>
-	virtual ~Ticket();
+	virtual ~Ticket() = default;
 
 // Accessors
+
 	/// <summary>Get ticket id</summary>
 	int getId() const { return id; };
 
@@ -58,10 +64,20 @@ public:
 	/// <summary>Extract details as string</summary>
 	string toString() const;
 
+// Mutators
+
+	/// <summary>Load guest</summary>
+	void loadGuest(Guest* g);
+
+	/// <summary>Load event</summary>
+	void loadEvent(Event* e);
 
 // Static methods
 	/// <summary>Set id number for next ticket</summary>
 	static void setNextId(int _id);
+
+	/// <summary>Get id number for next ticket</summary>
+	static int getNextId();
 
 	/// <summary>Converts a ticket type to string</summary>
 	static string typeToString(TicketType t);
@@ -87,7 +103,12 @@ public:
 class StandardTicket : public Ticket {
 public:
 	/// <summary>Create new standard ticket</summary>
-	StandardTicket(Guest* g, Event* e, double price);
+	StandardTicket(Guest* g, Event* e, double price)
+		: Ticket(g, e, price) {}
+
+	/// <summary>Constructor to load standard ticket from file</summary>
+	StandardTicket(int id, double price)
+		: Ticket(id, price) {}
 
 	/// <summary>Get ticket type</summary>
 	TicketType getType() const override { return TicketType::Standard; };
@@ -100,7 +121,12 @@ private:
 
 public:
 	/// <summary>Create new vip ticket</summary>
-	VipTicket(Guest* g, Event* e, double price, int seat);
+	VipTicket(Guest* g, Event* e, double price, int seat)
+		: Ticket(g, e, price), seatNum(seat) {}
+
+	/// <summary>Constructor to load standard ticket from file</summary>
+	VipTicket(int id, double price, int seat)
+		: Ticket(id, price), seatNum(seat) {}
 
 	/// <summary>Get ticket type</summary>
 	TicketType getType() const override { return TicketType::VIP; };

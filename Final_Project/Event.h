@@ -35,10 +35,17 @@ public:
 	/// <param name="totalSeats">Total seats that can be reserved</param>
 	/// <param name="stdPrice">Price of standard tickets</param>
 	/// <param name="vipPrice">Price of vip tickets</param>
-	Event(string _title, Venue* _venue, int totalTickets, int totalSeats, double stdPrice, double vipPrice);
+	Event(
+		string _title, Venue* _venue, int totalTickets, 
+		int _totalSeats, double stdPrice, double vipPrice
+	);
 
-	/// <summary>Delete ticket registry</summary>
-	~Event();
+	/// <summary>Load event from file</summary>
+	Event(
+		int _id, string _title, double _revenue,
+		int _unsoldTickets, int _totalSeats, int _reservedSeats, TicketHash details
+	);
+
 
 // Accessors
 	
@@ -54,11 +61,17 @@ public:
 	/// <summary>Get number of unsold tickets</summary>
 	int getUnsoldTickets() const { return unsoldTickets; };
 
+	/// <summary>Get number of unsold tickets</summary>
+	const TicketList& getSoldTickets() const { return soldTickets; };
+
 	/// <summary>Get number of open seats remaining</summary>
 	int getOpenSeats() const { return totalSeats - reservedSeats; };
 
 	/// <summary>Gets the next available seat number</summary>
 	int getNextSeat() const { return reservedSeats + 1; };
+
+	/// <summary>Get revenue</summary>
+	double getRevenue() const { return revenue; };
 
 	/// <summary>Print event info</summary>
 	void printEvent() const;
@@ -69,7 +82,7 @@ public:
 	/// <summary>
 	/// Get read only access to the ticket details of the given type
 	/// </summary>
-	const TicketInfo& getTicketInfo(TicketType type) const;
+	const TicketHash& getTicketDetails() const;
 
 	/// <summary>
 	/// Check if there are enough tickets and seats (if applicable) for the given purchase.
@@ -85,7 +98,16 @@ public:
 	/// </summary>
 	void addTicket(Ticket* t);
 
+	/// <summary>Load ticket</summary>
+	void loadTicket(Ticket* t);
+
+	/// <summary>Load venue</summary>
+	void loadVenue(Venue* v);
+
 // Static methods
 	/// <summary>Set next id</summary>
 	static void setNextId(int id);
+
+	/// <summary>Get id number for next event</summary>
+	static int getNextId();
 };

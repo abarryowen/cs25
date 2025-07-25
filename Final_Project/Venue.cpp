@@ -15,7 +15,7 @@ using namespace std;
 int Venue::nextId = 1;
 
 // Constructors and destructors
-Venue::Venue(string _name) : name(_name), id(nextId++), revenue(0) {}
+
 
 // Accessors
 
@@ -23,12 +23,12 @@ void Venue::printVenue() const {
 	cout << "Name: " << getName() << endl
 		<< "ID: " << getId() << endl
 		<< "Total Events: " << events.size() << endl
-		<< "Total Revenue: " << revenue << endl << endl;
+		<< "Total Revenue: " << getRevenue() << endl << endl;
 }
 
 void Venue::printEvents() const {
 
-	cout << "\n-----Events-----\n\n";
+	cout << "\n--" << name << ": Events--\n";
 
 	// Print title and ticket info
 	for (Event* e : events) {
@@ -48,6 +48,18 @@ Event* Venue::searchEvents(string title) const {
 	return e_ptr;
 }
 
+double Venue::getRevenue() const {
+	
+	// Sum revenue across events
+	double total = 0;
+
+	for (const Event* e : events) {
+		total += e->getRevenue();
+	}
+
+	return total;
+}
+
 // Mutators
 void Venue::addEvent(Event* e) {
 	events.push_back(e);
@@ -56,4 +68,8 @@ void Venue::addEvent(Event* e) {
 // Static methods
 void Venue::setNextId(int id) {
 	nextId = id;
+}
+
+int Venue::getNextId() {
+	return nextId;
 }
