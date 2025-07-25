@@ -24,7 +24,7 @@ void Guest::printGuest() const {
 
 void Guest::printEvents() const {
 	// Print header
-	cout << "\n--" << name << ": Events Attended--\n";
+	cout << "\n--" << name << ": Events--\n";
 
 	// Create a ticket pivot for getting event details
 	TicketPivot t_piv = Ticket::groupTickets(
@@ -72,6 +72,8 @@ void Guest::printEvents() const {
 		cout << ss.str() << endl << endl; // Print string
 		ss.str(""); // Clear
 	}
+
+	cout << endl;
 }
 
 // Mutators

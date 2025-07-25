@@ -35,6 +35,8 @@ void Venue::printEvents() const {
 		e->printEvent();
 		cout << endl;
 	}
+
+	cout << endl;
 }
 
 Event* Venue::searchEvents(string title) const {

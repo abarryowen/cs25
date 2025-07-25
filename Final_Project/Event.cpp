@@ -49,8 +49,7 @@ Event::Event(
 // Accessors
 void Event::printEvent() const {
 	cout << getTitle() << " at " << getVenue()->getName() << endl
-		<< "Tickets Left: " << getUnsoldTickets() << ", Seats Left: " << getOpenSeats() << endl
-		<< "Revenue Test: " << revenue << endl << endl;
+		<< "Tickets Left: " << getUnsoldTickets() << ", Seats Left: " << getOpenSeats() << endl << endl;
 }
 
 void Event::printGuests() const {

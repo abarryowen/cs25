@@ -1,0 +1,12 @@
+{
+    "events": [],
+    "guests": [],
+    "ids": {
+        "event": 1,
+        "guest": 1,
+        "ticket": 1,
+        "venue": 1
+    },
+    "tickets": [],
+    "venues": []
+}

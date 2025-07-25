@@ -27,7 +27,7 @@ private:
 public:
 // Constructors and destructors
 
-	/// <summary>Default constructor</summary>
+	/// <summary>Load data from file</summary>
 	TicketMgr();
 
 	/// <summary>Delete allocated memory</summary>
@@ -118,12 +118,7 @@ public:
 	/// <summary>Load all data from json file</summary>
 	void loadAll();
 
-// Test -------------------------------
-	void numTest() {
-		cout << "Guests: " << guests.size() << endl;
-		cout << "Events: " << events.size() << endl;
-		cout << "Tickets: " << tickets.size() << endl;
-		cout << "Venues: " << venues.size() << endl;
-	}
+	/// <summary>Load all data from json file</summary>
+	void overrideFile();
 
 };

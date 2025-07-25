@@ -19,7 +19,9 @@ using json = nlohmann::json;
 // Static variables
 
 // Constructors and destructors
-TicketMgr::TicketMgr() = default;
+TicketMgr::TicketMgr() {
+	loadAll();
+}
 
 TicketMgr::~TicketMgr() {
 	// Delete guests
@@ -292,7 +294,7 @@ json TicketMgr::saveTickets() const {
 		jTicket["sellPrice"] = t->getPrice();
 		jTicket["guest"] = t->getGuest()->getId();
 		jTicket["event"] = t->getEvent()->getId();
-		jTicket["type"] = t->getType();
+		jTicket["type"] = static_cast<int>(t->getType());
 
 		// Get seat number
 		int seatNum;
@@ -358,7 +360,7 @@ void TicketMgr::saveAll() const {
 	jRoot["venues"] = saveVenues();
 	jRoot["ids"] = saveNextIds();
 
-	// Load to file
+	// Save to file
 	ofstream saveFile("tm_data.json");
 	saveFile << jRoot.dump(4);
 	saveFile.close();
@@ -436,7 +438,7 @@ unordered_map<int, Ticket*> TicketMgr::loadTickets(const json& jTickets) {
 		int id = jTicket["id"];
 		int seatNum = jTicket["id"];
 		double price = jTicket["sellPrice"];
-		TicketType type = jTicket["type"];
+		TicketType type = static_cast<TicketType>(jTicket["type"]);
 
 		// Add ticket to registry attribute, and to load struct
 		Ticket* t = nullptr;
@@ -487,8 +489,8 @@ void TicketMgr::loadAll() {
 	ifstream loadFile("tm_data.json");
 
 	if (!loadFile.is_open()) {
-		// Check file is valid
-		throw std::runtime_error("File does not exist");
+		// If the file does not exist, then start from scratch
+		return;
 	}
 
 	json jData;
@@ -538,5 +540,25 @@ void TicketMgr::loadAll() {
 	Event::setNextId(jData["ids"]["event"]);
 	Ticket::setNextId(jData["ids"]["ticket"]);
 	Venue::setNextId(jData["ids"]["venue"]);
+}
 
+void TicketMgr::overrideFile() {
+	json jRoot;
+
+	// Add all data
+	jRoot["guests"] = json::array();
+	jRoot["events"] = json::array();
+	jRoot["tickets"] = json::array();
+	jRoot["venues"] = json::array();
+	jRoot["ids"] = {
+		{"guest", 1},
+		{"event", 1},
+		{"ticket", 1},
+		{"venue", 1},
+	};
+
+	// Save to file
+	ofstream saveFile("tm_data.json");
+	saveFile << jRoot.dump(4);
+	saveFile.close();
 }
