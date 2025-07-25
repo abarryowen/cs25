@@ -9,19 +9,14 @@
 
 using namespace std;
 
-// Forward declarations
 
 // Static variables
 int Venue::nextId = 1;
 
-// Constructors and destructors
-
 
 // Accessors
-
 void Venue::printVenue() const {
 	cout << "Name: " << getName() << endl
-		<< "ID: " << getId() << endl
 		<< "Total Events: " << events.size() << endl
 		<< "Total Revenue: " << getRevenue() << endl << endl;
 }
@@ -32,8 +27,9 @@ void Venue::printEvents() const {
 
 	// Print title and ticket info
 	for (Event* e : events) {
-		e->printEvent();
-		cout << endl;
+		cout << e->getTitle() << " at " << getName() << endl
+			 << "Tickets Left: " << e->getUnsoldTickets() << ", Seats Left: " << e->getOpenSeats() << endl
+			 << "Revenue: " << e->getRevenue() << endl << endl;
 	}
 
 	cout << endl;

@@ -12,8 +12,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Forward declarations
-
 /// <summary>
 /// Organizes users and events, and orchestrates the flow of tickets
 ///</summary>
@@ -34,6 +32,7 @@ public:
 	~TicketMgr();
 
 // Accessors
+
 	/// <summary>Number of guests in the guests list</summary>
 	size_t numGuests() const;
 

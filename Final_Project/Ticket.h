@@ -73,6 +73,7 @@ public:
 	void loadEvent(Event* e);
 
 // Static methods
+
 	/// <summary>Set id number for next ticket</summary>
 	static void setNextId(int _id);
 
@@ -97,7 +98,6 @@ public:
 	static void printTicketPivot(const TicketPivot& t_piv);
 
 };
-
 
 /// <summary>Standard ticket subclass</summary>
 class StandardTicket : public Ticket {
@@ -137,7 +137,3 @@ public:
 	/// <summary>Get seat number</summary>
 	int getSeat() const override { return seatNum; };
 };
-
-	/// <summary></summary>
-	/// <param name=""></param>
-	/// <returns></returns>

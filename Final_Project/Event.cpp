@@ -9,8 +9,6 @@
 
 using namespace std;
 
-// Forward declarations
-
 // Static variables
 int Event::nextId = 1;
 

@@ -13,15 +13,10 @@
 
 using namespace std;
 
-// Forward declarations
-
 // Static variables
 int Ticket::nextId = 1;
 
-// Constructors and destructors
-
 // Accessors
-
 int Ticket::getSeat() const {
 	throw logic_error("Ticket type has no seat");
 }

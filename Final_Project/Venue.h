@@ -14,6 +14,7 @@ private:
 
 public:
 // Constructors and destructors
+
 	/// <summary>Create new venue</summary>
 	Venue(string _name)
 		: name(_name), id(nextId++) {}
@@ -46,10 +47,12 @@ public:
 	double getRevenue() const;
 
 // Mutators
+
 	/// <summary>Add event</summary>
 	void addEvent(Event* e);
 
 // Static methods
+
 	/// <summary>Set id number for next venue</summary>
 	static void setNextId(int id);
 

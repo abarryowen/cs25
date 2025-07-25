@@ -13,8 +13,6 @@ using namespace std;
 // Static variables
 int Guest::nextId = 1;
 
-// Constructors
-
 
 // Accessors
 void Guest::printGuest() const {

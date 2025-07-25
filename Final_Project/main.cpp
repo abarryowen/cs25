@@ -61,7 +61,6 @@ int main() {
 			}
 
 			tm->addGuest(username, firstName, lastName); // Add
-			cout << "Guest added!\n\n";
 
 		}
 		else if (option == 2) {
@@ -82,7 +81,6 @@ int main() {
 			}
 
 			tm->addVenue(name); // Add
-			cout << "Venue added!\n\n";
 		
 		}
 		else if (option == 3) {
@@ -122,7 +120,7 @@ int main() {
 					// Purchase ticket
 
 					// Get event
-					cout << "Enter event title you would like to attend: ";
+					cout << "Enter title of event that you would like to attend: ";
 
 					string title;
 					cin.ignore();
@@ -160,7 +158,6 @@ int main() {
 					}
 
 					tm->sellTickets(g, e, static_cast<TicketType>(type), quantity); // Sell
-					cout << "Tickets purchased!\n\n";
 
 				}
 				else if (option_guest == 3) {
@@ -188,7 +185,7 @@ int main() {
 			cin.ignore();
 			getline(cin, name);
 
-			// Find guest
+			// Find venue
 			Venue* v = tm->searchVenues(name);
 
 			if (v == nullptr) {
@@ -247,7 +244,6 @@ int main() {
 					}
 
 					tm->addEvent(title, v, tickets, seats, stdPrice, vipPrice); // Add
-					cout << "Event added!\n\n";
 
 				}
 				else if (option_venue == 2) {
@@ -255,10 +251,30 @@ int main() {
 					v->printEvents();
 				}
 				else if (option_venue == 3) {
-					// See revenue
-					cout << "Total Revenue: " << v->getRevenue() << endl << endl;
+					// See specific event
+					// Get title
+					cout << "Enter event title: ";
+
+					string title;
+					cin.ignore();
+					getline(cin, title);
+
+					// Find event
+					Event* e = v->searchEvents(title);
+
+					if (e == nullptr) {
+						// Check if valid
+						cout << "This event does not exist, returning to main menu\n\n";
+						continue;
+					}
+
+					e->printGuests(); // Display details
 				}
 				else if (option_venue == 4) {
+					// See box office
+					v->printVenue();
+				}
+				else if (option_venue == 5) {
 					exit_venue = true; // Exit
 				}
 				else {
@@ -374,8 +390,9 @@ void venueMenu() {
 	cout << "Would you like to?\n"
 		 << "\t1. Add event\n"
 		 << "\t2. See events for this venue\n"
-		 << "\t3. See revenue\n"
-		 << "\t4. Exit venue\n\n";
+		 << "\t3. See guestlist for event\n"
+		 << "\t4. See box office\n"
+		 << "\t5. Exit venue\n\n";
 }
 
 /// <summary>Display admin submenu</summary>

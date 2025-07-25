@@ -14,9 +14,6 @@
 using namespace std;
 using json = nlohmann::json;
 
-// Forward declarations
-
-// Static variables
 
 // Constructors and destructors
 TicketMgr::TicketMgr() {
@@ -134,6 +131,7 @@ void TicketMgr::addGuest(string username, string firstName, string lastName) {
 		// Only add guest if they don't exist already
 		g = new Guest(username, firstName, lastName);
 		guests.push_back(g);
+		cout << "Guest added!\n\n";
 	}
 	else {
 		cout << "An guest with this username already exists\n";
@@ -150,6 +148,7 @@ void TicketMgr::addEvent(string title, Venue* venue, int totalTickets, int total
 		events.push_back(e);
 
 		venue->addEvent(e); // Add to venue
+		cout << "Event added!\n\n";
 	}
 	else {
 		cout << "An event with this title already exists\n";
@@ -166,6 +165,7 @@ void TicketMgr::addVenue(string _name) {
 		// Only add guest if they don't exist already
 		v = new Venue(_name);
 		venues.push_back(v);
+		cout << "Venue added!\n\n";
 	}
 	else {
 		cout << "An venue with this name already exists\n";
@@ -213,6 +213,7 @@ void TicketMgr::sellTickets(Guest* g, Event* e, TicketType type, int quantity) {
 		tickets.push_back(t); // Add ticket to registry
 	}
 
+	cout << "Tickets purchased!\n\n";
 	t = nullptr;
 }
 
